@@ -3,7 +3,6 @@ package com.example;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,11 +11,23 @@ import java.sql.SQLException;
 
 
 public class DataBaseConnector {
+    private static DataBaseConnector instance;
     private HikariDataSource dataSource;
 
-    public DataBaseConnector() throws IOException {
-        ConfigReader configReader = new ConfigReader("demo\\src\\main\\java\\com\\example\\config.json");
-        configProperty(configReader);
+    public static DataBaseConnector getInstance(){
+        if(instance == null) {
+            instance = new DataBaseConnector();
+        } 
+        return instance;
+    }
+
+    private DataBaseConnector() {
+        try{
+            ConfigReader configReader = new ConfigReader("demo\\src\\main\\java\\com\\example\\config.json");
+            configProperty(configReader);
+        } catch (Exception e) {
+            System.out.println("config.json doesn't exist.");
+        }
     }
 
     private void configProperty(ConfigReader configReader){

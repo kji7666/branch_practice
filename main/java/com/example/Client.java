@@ -19,7 +19,7 @@ public class Client {
 
     public Client(){
         try{
-            dataBaseConnector = new DataBaseConnector(); // Instantiate the database connector
+            dataBaseConnector = DataBaseConnector.getInstance(); // Instantiate the database connector
         } catch (Exception e){
             System.out.println(e.getStackTrace());
             System.out.println(e.getMessage());
